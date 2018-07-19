@@ -11,4 +11,9 @@ public abstract class MoneyRepository {
         this.name = name;
         this.amount = 0;
     }
+
+    public MoneyRepository(String name){
+        this.name = name;
+        this.amount = 0;
+    }
 }

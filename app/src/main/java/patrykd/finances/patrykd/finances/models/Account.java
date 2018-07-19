@@ -8,4 +8,6 @@ class Account extends MoneyRepository {
     public Account(int id, String name){
         super(id, name);
     }
+    public Account(String name){ super(name);}
+
 }
