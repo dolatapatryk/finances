@@ -76,4 +76,31 @@ public class UserController {
 
         return false;
     }
+
+    public static boolean checkIfUserExist(String email, String password, SQLiteDatabase db){
+        String[] columns={
+                "id"
+        };
+
+        String selection = "login = ? and password = ?";
+
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query("users",
+        columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        int cursorCount = cursor.getCount();
+
+        cursor.close();
+        db.close();
+        if(cursorCount > 0){
+            return true;
+        }
+
+        return false;
+    }
 }
