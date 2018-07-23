@@ -20,7 +20,7 @@ public class UserController {
         db.close();
     }
 
-    public List<User> getAllUsers(SQLiteDatabase db){
+    public static List<User> getAllUsers(SQLiteDatabase db){
         List<User> users = new ArrayList<>();
 
         String[] columns = {

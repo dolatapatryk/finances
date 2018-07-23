@@ -1,6 +1,9 @@
 package patrykd.finances.patrykd.finances.models;
 
-public abstract class MoneyRepository {
+import lombok.Data;
+
+public @Data
+ class MoneyRepository {
 
     private int id;
     private String name;
@@ -16,4 +19,6 @@ public abstract class MoneyRepository {
         this.name = name;
         this.amount = 0;
     }
+
+    public MoneyRepository(){}
 }

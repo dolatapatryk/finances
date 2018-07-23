@@ -19,7 +19,7 @@ public class CategoryController {
         db.close();
     }
 
-    public List<Category> getAllCategories(SQLiteDatabase db){
+    public static List<Category> getAllCategories(SQLiteDatabase db){
         List<Category> categories = new ArrayList<>();
 
         String[] columns = {"id", "name"};
@@ -37,12 +37,17 @@ public class CategoryController {
                 Category cat = new Category();
                 cat.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
                 cat.setName(cursor.getString(cursor.getColumnIndex("name")));
-                cat.add(user);
+                categories.add(cat);
             }while(cursor.moveToNext());
         }
         cursor.close();
         db.close();
 
-        return users;
+        return categories;
+    }
+
+    public static void deleteCategory(Category cat, SQLiteDatabase db){
+        db.delete("categories", "id = ?", new String[]{String.valueOf(cat.getId())});
+        db.close();
     }
 }

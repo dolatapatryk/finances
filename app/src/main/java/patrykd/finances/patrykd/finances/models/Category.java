@@ -1,9 +1,14 @@
 package patrykd.finances.patrykd.finances.models;
 
+import lombok.Data;
 import lombok.Getter;
 
-public class Category {
+public @Data
+class Category {
 
-    @Getter private int id;
-    @Getter private String name;
+     private int id;
+     private String name;
+
+    public Category() {
+    }
 }
