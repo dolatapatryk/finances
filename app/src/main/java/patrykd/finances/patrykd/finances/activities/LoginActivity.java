@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(UserController.checkIfUserExist(login, password, databaseHelper.getReadableDatabase())){
             Intent mainIntent = new Intent(activity, MainActivity.class);
-            mainIntent.putExtra("LOGIN", login);
+            mainIntent.putExtra("login", login);
             emptyInputEditText();
             startActivity(mainIntent);
         }else{

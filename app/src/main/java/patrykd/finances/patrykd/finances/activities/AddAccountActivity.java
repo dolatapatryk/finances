@@ -11,9 +11,13 @@ import android.view.View;
 
 import org.w3c.dom.Text;
 
+import patrykd.finances.MainActivity;
 import patrykd.finances.R;
+import patrykd.finances.patrykd.finances.controllers.AccountController;
 import patrykd.finances.patrykd.finances.controllers.InputValidation;
+import patrykd.finances.patrykd.finances.controllers.UserController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
+import patrykd.finances.patrykd.finances.models.Account;
 
 public class AddAccountActivity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = AddAccountActivity.this;
@@ -64,26 +68,32 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.appCompatButtonAdd:
-                verifyFromSQLite();
+                addAccount();
                 break;
             case R.id.textViewLinkBack:
-                Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
+                Intent intentAccount = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intentAccount);
                 break;
         }
     }
 
-    private void verifyFromSQLite(){
+    private void addAccount(){
         String errorName = "Enter the account's name";
         String errorAmount = "Enter the amount";
         String name = textInputEditTextName.getText().toString().trim();
         Double amount = Double.parseDouble(textInputEditTextAmount.getText().toString().trim());
-
         if(!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, errorName)){
             return;
         }
         if(!inputValidation.isInputEditTextFilled(textInputEditTextAmount, textInputLayoutAmount, errorAmount)){
             return;
         }
+        Account acc = new Account();
+        acc.setName(name);
+        acc.setAmount(amount);
+        int userId = UserController.getUserId(MainActivity.userLogin, db.getReadableDatabase());
+        AccountController.addAccount(acc, userId, db.getWritableDatabase());
+        Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(mainIntent);
     };
 }

@@ -77,14 +77,14 @@ public class UserController {
         return false;
     }
 
-    public static boolean checkIfUserExist(String email, String password, SQLiteDatabase db){
+    public static boolean checkIfUserExist(String login, String password, SQLiteDatabase db){
         String[] columns={
                 "id"
         };
 
         String selection = "login = ? and password = ?";
 
-        String[] selectionArgs = {email, password};
+        String[] selectionArgs = {login, password};
 
         Cursor cursor = db.query("users",
         columns,
@@ -102,5 +102,18 @@ public class UserController {
         }
 
         return false;
+    }
+
+    public static int getUserId(String login, SQLiteDatabase db){
+        String query = "SELECT id from users where login = ? ";
+
+        String[] selectionArgs = {login};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if(cursor.moveToFirst()){
+            return cursor.getInt(0);
+        }else{
+            return -1;
+        }
     }
 }

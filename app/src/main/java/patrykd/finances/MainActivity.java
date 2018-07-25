@@ -1,8 +1,8 @@
 package patrykd.finances;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,25 +12,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
+import patrykd.finances.patrykd.finances.controllers.AccountController;
+import patrykd.finances.patrykd.finances.database.DatabaseHelper;
+import patrykd.finances.patrykd.finances.models.Account;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+
+    private final AppCompatActivity activity = MainActivity.this;
+
+    private AppCompatButton appCompatButtonAdd;
+    private AppCompatButton appCompatButtonDelete;
+
+    private ListView listViewAccount;
+    private ArrayAdapter<Account> adapter;
+
+    private DatabaseHelper db;
+
+    public static String userLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_account);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +51,31 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        initViews();
+        initListeners();
+        initObjects();
+
+        Intent myIntent = getIntent();
+        userLogin = myIntent.getStringExtra("login");
+        System.out.println(userLogin);
+
+        displayAccounts();
+    }
+
+    private void initViews(){
+        appCompatButtonAdd = findViewById(R.id.appCompatButtonAdd);
+        appCompatButtonDelete = findViewById(R.id.appCompatButtonDelete);
+        listViewAccount = findViewById(R.id.listViewAccount);
+    }
+
+    private void initListeners(){
+        appCompatButtonAdd.setOnClickListener(this);
+        appCompatButtonDelete.setOnClickListener(this);
+    }
+
+    private void initObjects(){
+        db = new DatabaseHelper(activity);
     }
 
     @Override
@@ -81,6 +117,8 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.accounts) {
+//            Intent accountIntent = new Intent(activity, MainActivity.class);
+//            startActivity(accountIntent);
 
         } else if (id == R.id.expenses) {
 
@@ -95,5 +133,24 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.appCompatButtonAdd:
+                Intent intentAdd = new Intent(getApplicationContext(), AddAccountActivity.class);
+                startActivity(intentAdd);
+                break;
+            case R.id.appCompatButtonDelete:
+
+                break;
+        }
+    }
+
+    private void displayAccounts(){
+        adapter = new ArrayAdapter<>(this, R.layout.row,
+                AccountController.getAllAcounts(userLogin, db.getReadableDatabase()));
+        listViewAccount.setAdapter(adapter);
     }
 }
