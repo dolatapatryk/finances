@@ -89,9 +89,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String errorPassword = "Enter password";
         String login = textInputEditTextLogin.getText().toString().trim();
         String password = textInputEditTextPassword.getText().toString().trim();
-        if(!inputValidation.isInputEditTextFilled(textInputEditTextLogin, textInputLayoutLogin, errorLogin)) {
-            return;
-        }
         if(!inputValidation.isInputEditTextFilled(textInputEditTextLogin, textInputLayoutLogin, errorLogin)){
             return;
         }

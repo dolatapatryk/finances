@@ -6,17 +6,24 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.ListViewCompat;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import patrykd.finances.R;
+import patrykd.finances.patrykd.finances.controllers.AccountController;
+import patrykd.finances.patrykd.finances.database.DatabaseHelper;
+import patrykd.finances.patrykd.finances.models.Account;
 
 
 public class AccountActivity extends AppCompatActivity implements View.OnClickListener {
+    private final AppCompatActivity activity = AccountActivity.this;
 
     private AppCompatButton appCompatButtonAdd;
     private AppCompatButton appCompatButtonDelete;
 
     private ListViewCompat listViewAccount;
+
+    private DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,8 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
         initViews();
         initListeners();
+        initObjects();
+        displayAccounts();
     }
 
     private void initViews(){
@@ -39,6 +48,10 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
         listViewAccount.setOnClickListener(this);
     }
 
+    private void initObjects(){
+        db = new DatabaseHelper(activity);
+    }
+
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -50,5 +63,11 @@ public class AccountActivity extends AppCompatActivity implements View.OnClickLi
 
                 break;
         }
+    }
+
+    private void displayAccounts(){
+        ArrayAdapter<Account> adapter = new ArrayAdapter<>(this, R.layout.activity_account,
+                AccountController.getAllAcounts(db.getReadableDatabase()));
+        listViewAccount.setAdapter(adapter);
     }
 }
