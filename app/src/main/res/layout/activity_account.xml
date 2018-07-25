@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".patrykd.finances.fragments.AccountFragment">
+    tools:context=".patrykd.finances.activities.AccountActivity">
 
 
-    <Button
-        android:id="@+id/buttonAddAccount"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/appCompatButtonAdd"
         android:layout_width="117dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -37,13 +37,13 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/buttonDeleteAccount"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/appCompatButtonDelete"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/buttonAddAccount"
-        android:layout_marginEnd="42dp"
+        android:layout_alignTop="@+id/appCompatButtonAdd"
+        android:layout_marginEnd="48dp"
         android:background="@color/colorTextHint"
         android:text="delete account" />
 
