@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -207,33 +208,35 @@ public class MainActivity extends AppCompatActivity
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.prompt, null);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         alertDialogBuilder.setView(promptsView);
 
         final EditText userInput = promptsView.findViewById(R.id.editTextDialogUserInput);
 
-        alertDialogBuilder
-                .setCancelable(false)
-                .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                System.out.println(positionOnList);
-                                Account acc = (Account) listViewAccount.getItemAtPosition(positionOnList);
-                                double money = Double.parseDouble(userInput.getText().toString()) + acc.getAmount();
-                                AccountController.addMoneyToAccount(acc, money, db.getWritableDatabase());
-                                displayAccounts();
-                            }
-                        })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+        alertDialogBuilder.setCancelable(false);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        Button button = promptsView.findViewById(R.id.button);
+        Button button2 = promptsView.findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(positionOnList);
+                Account acc = (Account) listViewAccount.getItemAtPosition(positionOnList);
+                double money = Double.parseDouble(userInput.getText().toString()) + acc.getAmount();
+                AccountController.addMoneyToAccount(acc, money, db.getWritableDatabase());
+                displayAccounts();
+                alertDialog.cancel();
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
+
 
         alertDialog.show();
     }
