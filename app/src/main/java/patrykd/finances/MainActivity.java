@@ -14,6 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.List;
 
 import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
 import patrykd.finances.patrykd.finances.controllers.AccountController;
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity
 
     private AppCompatButton appCompatButtonAdd;
     private AppCompatButton appCompatButtonDelete;
+
+    private TextView textViewAmount;
 
     private ListView listViewAccount;
     private ArrayAdapter<Account> adapter;
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         appCompatButtonAdd = findViewById(R.id.appCompatButtonAdd);
         appCompatButtonDelete = findViewById(R.id.appCompatButtonDelete);
         listViewAccount = findViewById(R.id.listViewAccount);
+        textViewAmount = findViewById(R.id.textViewAmount);
     }
 
     private void initListeners(){
@@ -117,8 +123,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.accounts) {
-//            Intent accountIntent = new Intent(activity, MainActivity.class);
-//            startActivity(accountIntent);
+            displayAccounts();
 
         } else if (id == R.id.expenses) {
 
@@ -140,6 +145,7 @@ public class MainActivity extends AppCompatActivity
         switch(view.getId()){
             case R.id.appCompatButtonAdd:
                 Intent intentAdd = new Intent(getApplicationContext(), AddAccountActivity.class);
+                intentAdd.putExtra("login", userLogin);
                 startActivity(intentAdd);
                 break;
             case R.id.appCompatButtonDelete:
@@ -149,8 +155,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void displayAccounts(){
-        adapter = new ArrayAdapter<>(this, R.layout.row,
-                AccountController.getAllAcounts(userLogin, db.getReadableDatabase()));
+        List<Account> accounts = AccountController.getAllAcounts(userLogin, db.getReadableDatabase());
+        adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
+                accounts);
         listViewAccount.setAdapter(adapter);
+        double amount = 0;
+        for(Account acc:accounts){
+            amount += acc.getAmount();
+        }
+        textViewAmount.setText(String.valueOf(amount));
     }
 }

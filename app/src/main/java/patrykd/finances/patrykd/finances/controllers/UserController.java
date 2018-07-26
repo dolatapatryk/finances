@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import patrykd.finances.MainActivity;
 import patrykd.finances.patrykd.finances.models.User;
 
 public class UserController {

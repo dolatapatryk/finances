@@ -35,10 +35,15 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
     private DatabaseHelper db;
     private InputValidation inputValidation;
 
+    private String userLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account);
+
+        Intent myIntent = getIntent();
+        userLogin = myIntent.getStringExtra("login");
 
         initViews();
         initListeners();
@@ -91,9 +96,10 @@ public class AddAccountActivity extends AppCompatActivity implements View.OnClic
         Account acc = new Account();
         acc.setName(name);
         acc.setAmount(amount);
-        int userId = UserController.getUserId(MainActivity.userLogin, db.getReadableDatabase());
+        int userId = UserController.getUserId(userLogin, db.getReadableDatabase());
         AccountController.addAccount(acc, userId, db.getWritableDatabase());
         Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
+        mainIntent.putExtra("login", userLogin);
         startActivity(mainIntent);
     };
 }
