@@ -28,7 +28,9 @@
         <activity android:name=".patrykd.finances.activities.RegisterActivity" />
         <activity android:name=".patrykd.finances.activities.AddAccountActivity" />
         <activity android:name=".patrykd.finances.activities.AddCategoryActivity" />
-        <activity android:name=".patrykd.finances.activities.CategoryActivity"></activity>
+        <activity android:name=".patrykd.finances.activities.CategoryActivity" />
+        <activity android:name=".patrykd.finances.activities.ExpenseActivity" />
+        <activity android:name=".patrykd.finances.activities.AddExpenseActivity"></activity>
     </application>
 
 </manifest>

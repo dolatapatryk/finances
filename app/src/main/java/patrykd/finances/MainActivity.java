@@ -25,6 +25,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
+import patrykd.finances.patrykd.finances.activities.AddExpenseActivity;
 import patrykd.finances.patrykd.finances.controllers.AccountController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
 import patrykd.finances.patrykd.finances.activities.CategoryActivity;
@@ -91,12 +92,7 @@ public class MainActivity extends AppCompatActivity
     private void initListeners(){
         appCompatButtonAdd.setOnClickListener(this);
         appCompatButtonDelete.setOnClickListener(this);
-        appCompatButtonIncome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayPrompt();
-            }
-        });
+        appCompatButtonIncome.setOnClickListener(this);
         appCompatButtonExpense.setOnClickListener(this);
         listViewAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -181,7 +177,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.appCompatButtonDelete:
                 deleteAccount(positionOnList);
                 break;
+            case R.id.appCompatButtonIncome:
+                displayPrompt();
+                break;
             case R.id.appCompatButtonExpense:
+                Account acc = (Account)listViewAccount.getItemAtPosition(positionOnList);
+                Intent intentExpense = new Intent(getApplicationContext(), AddExpenseActivity.class);
+                intentExpense.putExtra("login", userLogin);
+                intentExpense.putExtra("accountId", acc.getId());
+                startActivity(intentExpense);
                 break;
         }
     }
