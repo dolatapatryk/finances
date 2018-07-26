@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -26,6 +27,8 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseHelper db;
 
     private String userLogin;
+
+    private int positionOnList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,13 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private void initListeners(){
         appCompatButtonAdd.setOnClickListener(this);
         appCompatButtonDelete.setOnClickListener(this);
+        listViewCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                positionOnList = position;
+            }
+        });
     }
 
     private void initObjects(){
@@ -65,7 +75,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intentAdd);
                 break;
             case R.id.appCompatButtonDelete:
-
+                deleteCategory(positionOnList);
                 break;
         }
     }
@@ -75,5 +85,11 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         adapter = new ArrayAdapter<>(this, R.layout.row,
                 accounts);
         listViewCategory.setAdapter(adapter);
+    }
+
+    private void deleteCategory(int position){
+        Category cat = (Category) listViewCategory.getItemAtPosition(position);
+        CategoryController.deleteCategory(cat, db.getWritableDatabase());
+        displayCategories();
     }
 }

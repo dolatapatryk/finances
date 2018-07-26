@@ -52,4 +52,16 @@ public class AccountController {
 
         return accounts;
     }
+
+    public static void deleteAccount(Account acc, SQLiteDatabase db){
+        db.delete("money_repositories", "id = ?", new String[]{String.valueOf(acc.getId())});
+        db.close();
+    }
+
+    public static void addMoneyToAccount(Account acc, double money, SQLiteDatabase db){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("amount", money);
+        db.update("money_repositories", contentValues, "id = ?", new String[]{String.valueOf(acc.getId())});
+        db.close();
+    }
 }

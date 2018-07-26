@@ -1,9 +1,11 @@
 package patrykd.finances;
 
-import android.net.Uri;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity
 
     private AppCompatButton appCompatButtonAdd;
     private AppCompatButton appCompatButtonDelete;
+    private AppCompatButton appCompatButtonIncome;
+    private AppCompatButton appCompatButtonExpense;
 
     private TextView textViewAmount;
 
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private DatabaseHelper db;
 
     public static String userLogin;
+    private int positionOnList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,8 @@ public class MainActivity extends AppCompatActivity
     private void initViews(){
         appCompatButtonAdd = findViewById(R.id.appCompatButtonAdd);
         appCompatButtonDelete = findViewById(R.id.appCompatButtonDelete);
+        appCompatButtonIncome = findViewById(R.id.appCompatButtonIncome);
+        appCompatButtonExpense = findViewById(R.id.appCompatButtonExpense);
         listViewAccount = findViewById(R.id.listViewAccount);
         textViewAmount = findViewById(R.id.textViewAmount);
     }
@@ -83,6 +90,20 @@ public class MainActivity extends AppCompatActivity
     private void initListeners(){
         appCompatButtonAdd.setOnClickListener(this);
         appCompatButtonDelete.setOnClickListener(this);
+        appCompatButtonIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPrompt();
+            }
+        });
+        appCompatButtonExpense.setOnClickListener(this);
+        listViewAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                positionOnList = position;
+            }
+        });
     }
 
     private void initObjects(){
@@ -157,7 +178,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intentAdd);
                 break;
             case R.id.appCompatButtonDelete:
-
+                deleteAccount(positionOnList);
+                break;
+            case R.id.appCompatButtonExpense:
                 break;
         }
     }
@@ -172,12 +195,48 @@ public class MainActivity extends AppCompatActivity
             amount += acc.getAmount();
         }
         textViewAmount.setText(String.valueOf(amount));
-        listViewAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setSelected(true);
-            }
-        });
     }
+
+    private void deleteAccount(int position){
+        Account acc = (Account)listViewAccount.getItemAtPosition(position);
+        AccountController.deleteAccount(acc, db.getWritableDatabase());
+        displayAccounts();
+    }
+
+    private void displayPrompt(){
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompt, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = promptsView.findViewById(R.id.editTextDialogUserInput);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.out.println(positionOnList);
+                                Account acc = (Account) listViewAccount.getItemAtPosition(positionOnList);
+                                double money = Double.parseDouble(userInput.getText().toString()) + acc.getAmount();
+                                AccountController.addMoneyToAccount(acc, money, db.getWritableDatabase());
+                                displayAccounts();
+                            }
+                        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+    }
+
 
 }
