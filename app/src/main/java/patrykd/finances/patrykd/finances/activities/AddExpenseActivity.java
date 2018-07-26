@@ -72,7 +72,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        })
+        });
     }
 
     private void initObjects(){
