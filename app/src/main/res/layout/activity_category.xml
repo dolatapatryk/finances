@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".patrykd.finances.activities.CategoryActivity">
+
+
+    <ListView
+        android:id="@+id/listViewCategory"
+        android:layout_width="match_parent"
+        android:layout_height="413dp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/buttonAddCategory"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="28dp"
+        android:layout_marginStart="33dp"
+        android:background="@color/colorTextHint"
+        android:text="Add category" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/buttonDeleteCategory"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/buttonAddCategory"
+        android:layout_marginEnd="42dp"
+        android:background="@color/colorTextHint"
+        android:text="Delete Category" />
+
+</RelativeLayout>

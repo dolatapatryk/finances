@@ -19,15 +19,19 @@ public class CategoryController {
         db.close();
     }
 
-    public static List<Category> getAllCategories(SQLiteDatabase db){
+    public static List<Category> getAllCategories(String login, SQLiteDatabase db){
+        int userId = UserController.getUserId(login, db);
         List<Category> categories = new ArrayList<>();
 
         String[] columns = {"id", "name"};
 
+        String selection = "user_id = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+
         Cursor cursor = db.query("categories",
                 columns,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 null,

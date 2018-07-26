@@ -1,5 +1,6 @@
 package patrykd.finances;
 
+import android.net.Uri;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -21,10 +22,11 @@ import java.util.List;
 import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
 import patrykd.finances.patrykd.finances.controllers.AccountController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
+import patrykd.finances.patrykd.finances.activities.CategoryActivity;
 import patrykd.finances.patrykd.finances.models.Account;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
 
     private final AppCompatActivity activity = MainActivity.this;
 
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,15 +61,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        initViews();
-        initListeners();
-        initObjects();
-
         Intent myIntent = getIntent();
         userLogin = myIntent.getStringExtra("login");
         System.out.println(userLogin);
-
+        initViews();
+        initListeners();
+        initObjects();
         displayAccounts();
+
     }
 
     private void initViews(){
@@ -122,13 +125,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        android.app.FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.accounts) {
             displayAccounts();
 
         } else if (id == R.id.expenses) {
 
         } else if (id == R.id.categories) {
-
+            Intent catIntent = new Intent(getApplicationContext(), CategoryActivity.class);
+            catIntent.putExtra("login", userLogin);
+            startActivity(catIntent);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -165,4 +171,5 @@ public class MainActivity extends AppCompatActivity
         }
         textViewAmount.setText(String.valueOf(amount));
     }
+
 }

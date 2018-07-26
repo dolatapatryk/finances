@@ -15,7 +15,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "password TEXT NOT NULL)";
     private String createCategoriesTable = "create table categories(\n" +
             "id integer primary key autoincrement,\n" +
-            "name text not null)";
+            "name text not null," +
+            "user_id integer not null," +
+            "foreign key (user_id) references users(id))";
     private String createMoneyRepositoriesTable = "create table money_repositories(\n" +
             "id integer primary key autoincrement,\n" +
             "name text not null,\n" +
