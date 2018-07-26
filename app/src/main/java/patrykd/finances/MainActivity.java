@@ -13,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity
 
     private void displayAccounts(){
         List<Account> accounts = AccountController.getAllAcounts(userLogin, db.getReadableDatabase());
-        adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
+        adapter = new ArrayAdapter<>(this, R.layout.row,
                 accounts);
         listViewAccount.setAdapter(adapter);
         double amount = 0;
@@ -170,6 +172,12 @@ public class MainActivity extends AppCompatActivity
             amount += acc.getAmount();
         }
         textViewAmount.setText(String.valueOf(amount));
+        listViewAccount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+            }
+        });
     }
 
 }

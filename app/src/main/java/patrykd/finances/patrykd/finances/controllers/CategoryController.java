@@ -11,9 +11,11 @@ import patrykd.finances.patrykd.finances.models.Category;
 
 public class CategoryController {
 
-    public static void addCategory(Category cat, SQLiteDatabase db){
+    public static void addCategory(Category cat, String login, SQLiteDatabase db){
+        int userId = UserController.getUserId(login, db);
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", cat.getName());
+        contentValues.put("user_id", userId);
 
         db.insert("categories", null, contentValues);
         db.close();
@@ -23,7 +25,7 @@ public class CategoryController {
         int userId = UserController.getUserId(login, db);
         List<Category> categories = new ArrayList<>();
 
-        String[] columns = {"id", "name"};
+        String[] columns = {"id", "name", "user_id"};
 
         String selection = "user_id = ?";
         String[] selectionArgs = {String.valueOf(userId)};
@@ -41,6 +43,7 @@ public class CategoryController {
                 Category cat = new Category();
                 cat.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
                 cat.setName(cursor.getString(cursor.getColumnIndex("name")));
+                cat.setUser_id(Integer.parseInt(cursor.getString(cursor.getColumnIndex("user_id"))));
                 categories.add(cat);
             }while(cursor.moveToNext());
         }

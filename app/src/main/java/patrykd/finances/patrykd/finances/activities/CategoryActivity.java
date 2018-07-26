@@ -42,8 +42,8 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initViews(){
-        appCompatButtonAdd = findViewById(R.id.buttonAddCategory);
-        appCompatButtonDelete = findViewById(R.id.buttonDeleteCategory);
+        appCompatButtonAdd = findViewById(R.id.appCompatButtonAdd);
+        appCompatButtonDelete = findViewById(R.id.appCompatButtonDelete);
         listViewCategory = findViewById(R.id.listViewCategory);
     }
 
@@ -72,7 +72,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
 
     private void displayCategories(){
         List<Category> accounts = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
-        adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item,
+        adapter = new ArrayAdapter<>(this, R.layout.row,
                 accounts);
         listViewCategory.setAdapter(adapter);
     }

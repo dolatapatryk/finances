@@ -13,7 +13,7 @@
         android:layout_height="413dp" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/buttonAddCategory"
+        android:id="@+id/appCompatButtonAdd"
         android:layout_width="125dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -24,12 +24,12 @@
         android:text="Add category" />
 
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/buttonDeleteCategory"
+        android:id="@+id/appCompatButtonDelete"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/buttonAddCategory"
-        android:layout_marginEnd="42dp"
+        android:layout_alignTop="@+id/appCompatButtonAdd"
+        android:layout_marginEnd="47dp"
         android:background="@color/colorTextHint"
         android:text="Delete Category" />
 

@@ -79,7 +79,7 @@ public class AddCategoryActivity extends AppCompatActivity implements View.OnCli
         Category cat = new Category();
         cat.setName(name);
         cat.setId(userId);
-        CategoryController.addCategory(cat, db.getWritableDatabase());
+        CategoryController.addCategory(cat, userLogin, db.getWritableDatabase());
         Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
         mainIntent.putExtra("login", userLogin);
         startActivity(mainIntent);
