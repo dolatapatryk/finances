@@ -11,6 +11,8 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import java.sql.Date;
+
 import patrykd.finances.MainActivity;
 import patrykd.finances.R;
 import patrykd.finances.patrykd.finances.controllers.InputValidation;

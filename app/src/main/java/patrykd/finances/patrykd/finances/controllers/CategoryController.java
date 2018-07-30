@@ -57,4 +57,17 @@ public class CategoryController {
         db.delete("categories", "id = ?", new String[]{String.valueOf(cat.getId())});
         db.close();
     }
+
+    public static String getCategoryName(int categoryId, SQLiteDatabase db){
+        String query = "SELECT name from categories where id = ? ";
+
+        String[] selectionArgs = {String.valueOf(categoryId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if(cursor.moveToFirst()){
+            return cursor.getString(0);
+        }else{
+            return "";
+        }
+    }
 }

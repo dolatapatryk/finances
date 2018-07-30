@@ -82,7 +82,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
 
     private void displayCategories(){
         List<Category> accounts = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
-        adapter = new ArrayAdapter<>(this, R.layout.row,
+        adapter = new ArrayAdapter<>(this, R.layout.row ,
                 accounts);
         listViewCategory.setAdapter(adapter);
     }

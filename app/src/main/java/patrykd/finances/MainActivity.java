@@ -1,6 +1,5 @@
 package patrykd.finances;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +25,7 @@ import java.util.List;
 
 import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
 import patrykd.finances.patrykd.finances.activities.AddExpenseActivity;
+import patrykd.finances.patrykd.finances.activities.ExpenseActivity;
 import patrykd.finances.patrykd.finances.controllers.AccountController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
 import patrykd.finances.patrykd.finances.activities.CategoryActivity;
@@ -150,7 +150,9 @@ public class MainActivity extends AppCompatActivity
             displayAccounts();
 
         } else if (id == R.id.expenses) {
-
+            Intent exIntent = new Intent(getApplicationContext(), ExpenseActivity.class);
+            exIntent.putExtra("login", userLogin);
+            startActivity(exIntent);
         } else if (id == R.id.categories) {
             Intent catIntent = new Intent(getApplicationContext(), CategoryActivity.class);
             catIntent.putExtra("login", userLogin);
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity
 
     private void displayAccounts(){
         List<Account> accounts = AccountController.getAllAcounts(userLogin, db.getReadableDatabase());
-        adapter = new ArrayAdapter<>(this, R.layout.row,
+        adapter = new ArrayAdapter<>(this, R.layout.row_account,
                 accounts);
         listViewAccount.setAdapter(adapter);
         double amount = 0;

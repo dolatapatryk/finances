@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "category_id integer not null,\n" +
             "user_id integer not null,\n" +
             "money_repository_id integer not null,\n" +
-            "date date not null,\n" +
+            "date long not null,\n" +
             "foreign key (category_id) references categories(id),\n" +
             "foreign key (user_id) references users(id),\n" +
             "foreign key (money_repository_id) references money_repositories(id)\n" +

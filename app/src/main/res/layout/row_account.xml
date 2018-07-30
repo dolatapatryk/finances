@@ -4,5 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@drawable/my_selecter"
-    android:gravity="center_vertical"
-    android:textSize="20dp"></TextView>
+    android:textSize="30dp"></TextView>

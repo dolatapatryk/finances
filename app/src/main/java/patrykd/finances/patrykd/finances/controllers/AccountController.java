@@ -53,6 +53,35 @@ public class AccountController {
         return accounts;
     }
 
+    public static Account getAccount(int accountId, SQLiteDatabase db){
+        Account acc = null;
+
+        String[] columns = {
+                "id", "name", "amount"
+        };
+
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(accountId)};
+
+        Cursor cursor = db.query("money_repositories",
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null);
+        if(cursor.moveToFirst()){
+            acc = new Account();
+            acc.setId(accountId);
+            acc.setName(cursor.getString(cursor.getColumnIndex("name")));
+            acc.setAmount(Double.parseDouble(cursor.getString(cursor.getColumnIndex("amount"))));
+        }
+        cursor.close();
+        db.close();
+
+        return acc;
+    }
+
     public static void deleteAccount(Account acc, SQLiteDatabase db){
         db.delete("money_repositories", "id = ?", new String[]{String.valueOf(acc.getId())});
         db.close();
@@ -62,6 +91,26 @@ public class AccountController {
         ContentValues contentValues = new ContentValues();
         contentValues.put("amount", money);
         db.update("money_repositories", contentValues, "id = ?", new String[]{String.valueOf(acc.getId())});
+        db.close();
+    }
+
+    public static String getAccountName(int accountId, SQLiteDatabase db){
+        String query = "SELECT name from money_repositories where id = ? ";
+
+        String[] selectionArgs = {String.valueOf(accountId)};
+
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if(cursor.moveToFirst()){
+            return cursor.getString(0);
+        }else{
+            return "";
+        }
+    }
+
+    public static void subtractMoneyFromAccount(int accountId, double money, SQLiteDatabase db){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("amount", money);
+        db.update("money_repositories", contentValues, "id = ?", new String[]{String.valueOf(accountId)});
         db.close();
     }
 }
