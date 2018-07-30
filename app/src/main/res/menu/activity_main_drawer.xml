@@ -16,6 +16,11 @@
             android:id="@+id/categories"
             android:icon="@drawable/outline_category_black_18dp"
             android:title="Categories" />
+        <item
+            android:id="@+id/monthly_statement"
+            android:title="Monthly statement"
+            android:icon="@drawable/ic_calendar_today"/>
+
     </group>
 
     <item android:title="Communicate">

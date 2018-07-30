@@ -15,9 +15,13 @@ import java.sql.Date;
 
 import patrykd.finances.MainActivity;
 import patrykd.finances.R;
+import patrykd.finances.patrykd.finances.controllers.AccountController;
+import patrykd.finances.patrykd.finances.controllers.CategoryController;
+import patrykd.finances.patrykd.finances.controllers.ExpenseController;
 import patrykd.finances.patrykd.finances.controllers.InputValidation;
 import patrykd.finances.patrykd.finances.controllers.UserController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
+import patrykd.finances.patrykd.finances.models.Expense;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

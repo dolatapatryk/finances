@@ -30,7 +30,8 @@
         <activity android:name=".patrykd.finances.activities.AddCategoryActivity" />
         <activity android:name=".patrykd.finances.activities.CategoryActivity" />
         <activity android:name=".patrykd.finances.activities.ExpenseActivity" />
-        <activity android:name=".patrykd.finances.activities.AddExpenseActivity"></activity>
+        <activity android:name=".patrykd.finances.activities.AddExpenseActivity" />
+        <activity android:name=".patrykd.finances.activities.StatementActivity"></activity>
     </application>
 
 </manifest>

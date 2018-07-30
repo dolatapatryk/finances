@@ -4,7 +4,9 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import patrykd.finances.patrykd.finances.models.Category;
@@ -72,7 +74,7 @@ public class CategoryController {
     }
 
     public static void setMonthlyAmountToCategory(List<Category> cats, SQLiteDatabase db){
-        String query = "SELECT amount from expenses where category_id = ?";
+        String query = "SELECT amount, date from expenses where category_id = ?";
 
         for(Category cat:cats){
             String[] selectionArgs = {String.valueOf(cat.getId())};
@@ -80,11 +82,55 @@ public class CategoryController {
             Cursor cursor = db.rawQuery(query, selectionArgs);
             if(cursor.moveToFirst()){
                 do{
-                    amount += cursor.getDouble(0);
+                    Date date = new Date(cursor.getLong(1));
+                    Date today = new Date(System.currentTimeMillis());
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+
+                    Calendar calToday = Calendar.getInstance();
+                    calToday.setTime(today);
+
+                    if((cal.get(Calendar.MONTH) == calToday.get(Calendar.MONTH)) && (cal.get(Calendar.YEAR) == calToday.get(Calendar.YEAR))){
+                        amount += cursor.getDouble(0);
+                    }
                 }while(cursor.moveToNext());
             }
             cat.setMonthlyAmount(amount);
         }
 
+    }
+
+    public static void setMonthlyAmountToCategory(int month, int year, List<Category> cats, SQLiteDatabase db){
+        String query = "SELECT amount, date from expenses where category_id = ?";
+
+        for(Category cat:cats){
+            String[] selectionArgs = {String.valueOf(cat.getId())};
+            double amount = 0;
+            Cursor cursor = db.rawQuery(query, selectionArgs);
+            if(cursor.moveToFirst()){
+                do{
+                    Date date = new Date(cursor.getLong(1));
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(date);
+
+
+                    if((cal.get(Calendar.MONTH) == month) && (cal.get(Calendar.YEAR) == year)){
+                        amount += cursor.getDouble(0);
+                    }
+                }while(cursor.moveToNext());
+            }
+            cat.setMonthlyAmount(amount);
+        }
+    }
+
+    public static double calculateTotal(List<Category> cats){
+        double amount = 0;
+        for(Category cat:cats){
+            amount += cat.getMonthlyAmount();
+        }
+
+        return amount;
     }
 }

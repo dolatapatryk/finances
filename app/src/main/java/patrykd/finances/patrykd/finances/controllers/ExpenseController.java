@@ -33,6 +33,7 @@ public class ExpenseController {
 
         String selection = "user_id = ?";
         String[] selectionArgs = {String.valueOf(userId)};
+        String order ="date desc";
 
         Cursor cursor = db.query("expenses",
                 columns,
@@ -40,7 +41,7 @@ public class ExpenseController {
                 selectionArgs,
                 null,
                 null,
-                null);
+                order);
         if(cursor.moveToFirst()){
             do{
                 Expense ex = new Expense();

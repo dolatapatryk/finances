@@ -8,8 +8,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import patrykd.finances.R;
 import patrykd.finances.patrykd.finances.controllers.CategoryController;
@@ -23,6 +27,8 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private AppCompatButton appCompatButtonAdd;
     private AppCompatButton appCompatButtonDelete;
     private ListView listViewCategory;
+    private TextView textViewMonth2;
+    private TextView textViewAmount2;
     private ArrayAdapter<Category> adapter;
     private DatabaseHelper db;
 
@@ -42,12 +48,15 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         initListeners();
         initObjects();
         displayCategories();
+        displayMonth();
     }
 
     private void initViews(){
         appCompatButtonAdd = findViewById(R.id.appCompatButtonAdd);
         appCompatButtonDelete = findViewById(R.id.appCompatButtonDelete);
         listViewCategory = findViewById(R.id.listViewCategory);
+        textViewMonth2 = findViewById(R.id.textViewMonth2);
+        textViewAmount2 = findViewById(R.id.textViewAmount2);
     }
 
     private void initListeners(){
@@ -83,6 +92,8 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private void displayCategories(){
         List<Category> categories = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
         CategoryController.setMonthlyAmountToCategory(categories, db.getReadableDatabase());
+        String amount = String.valueOf(CategoryController.calculateTotal(categories)) + " zł";
+        textViewAmount2.setText(amount);
         adapter = new ArrayAdapter<>(this, R.layout.row ,
                 categories);
         listViewCategory.setAdapter(adapter);
@@ -92,5 +103,16 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
         Category cat = (Category) listViewCategory.getItemAtPosition(position);
         CategoryController.deleteCategory(cat, db.getWritableDatabase());
         displayCategories();
+    }
+
+
+    private void displayMonth(){
+        Date date = new Date(System.currentTimeMillis());
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        String monthString = cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
+        int year = cal.get(Calendar.YEAR);
+        String dateString = monthString + " - " + year;
+        textViewMonth2.setText(dateString);
     }
 }

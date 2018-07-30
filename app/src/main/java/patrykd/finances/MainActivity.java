@@ -26,6 +26,7 @@ import java.util.List;
 import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
 import patrykd.finances.patrykd.finances.activities.AddExpenseActivity;
 import patrykd.finances.patrykd.finances.activities.ExpenseActivity;
+import patrykd.finances.patrykd.finances.activities.StatementActivity;
 import patrykd.finances.patrykd.finances.controllers.AccountController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
 import patrykd.finances.patrykd.finances.activities.CategoryActivity;
@@ -148,7 +149,6 @@ public class MainActivity extends AppCompatActivity
         android.app.FragmentManager fragmentManager = getFragmentManager();
         if (id == R.id.accounts) {
             displayAccounts();
-
         } else if (id == R.id.expenses) {
             Intent exIntent = new Intent(getApplicationContext(), ExpenseActivity.class);
             exIntent.putExtra("login", userLogin);
@@ -161,6 +161,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if(id == R.id.monthly_statement){
+            Intent statementIntent = new Intent(getApplicationContext(), StatementActivity.class);
+            statementIntent.putExtra("login", userLogin);
+            startActivity(statementIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
