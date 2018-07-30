@@ -24,7 +24,7 @@ class Account {
 
     @Override
     public String toString(){
-        return this.name.toUpperCase() + " amount: " + this.amount;
+        return this.name.toUpperCase() + " amount: " + this.amount + " zł";
     }
 
 }

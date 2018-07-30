@@ -30,7 +30,7 @@ class Expense {
     public Expense(){}
 
     public String toString(){
-        return amount + " " + categoryName + " "+
+        return amount + " zł " + categoryName + " "+
                 accountName + " " + date;
     }
 }

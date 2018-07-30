@@ -70,4 +70,21 @@ public class CategoryController {
             return "";
         }
     }
+
+    public static void setMonthlyAmountToCategory(List<Category> cats, SQLiteDatabase db){
+        String query = "SELECT amount from expenses where category_id = ?";
+
+        for(Category cat:cats){
+            String[] selectionArgs = {String.valueOf(cat.getId())};
+            double amount = 0;
+            Cursor cursor = db.rawQuery(query, selectionArgs);
+            if(cursor.moveToFirst()){
+                do{
+                    amount += cursor.getDouble(0);
+                }while(cursor.moveToNext());
+            }
+            cat.setMonthlyAmount(amount);
+        }
+
+    }
 }

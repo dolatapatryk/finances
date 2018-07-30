@@ -98,6 +98,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     private void displayCategories(){
         List<Category> cats = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
+        CategoryController.setMonthlyAmountToCategory(cats, db.getReadableDatabase());
         adapter = new ArrayAdapter<>(this, R.layout.simple_spinner_item, cats);
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

@@ -81,9 +81,10 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void displayCategories(){
-        List<Category> accounts = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
+        List<Category> categories = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
+        CategoryController.setMonthlyAmountToCategory(categories, db.getReadableDatabase());
         adapter = new ArrayAdapter<>(this, R.layout.row ,
-                accounts);
+                categories);
         listViewCategory.setAdapter(adapter);
     }
 

@@ -9,12 +9,13 @@ class Category {
      private int id;
      private String name;
      private int user_id;
+     private double monthlyAmount;
 
     public Category() {
     }
 
     @Override
     public String toString(){
-        return name;
+        return name + " " + monthlyAmount + " zł";
     }
 }
