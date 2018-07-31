@@ -92,7 +92,7 @@ public class CategoryActivity extends AppCompatActivity implements View.OnClickL
     private void displayCategories(){
         List<Category> categories = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
         CategoryController.setMonthlyAmountToCategory(categories, db.getReadableDatabase());
-        String amount = String.valueOf(CategoryController.calculateTotal(categories)) + " zł";
+        String amount = String.format("%.2f zł", CategoryController.calculateTotal(categories));
         textViewAmount2.setText(amount);
         adapter = new ArrayAdapter<>(this, R.layout.row ,
                 categories);

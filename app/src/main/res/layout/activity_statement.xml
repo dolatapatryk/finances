@@ -53,14 +53,13 @@
             android:text="show" />
 
         <TextView
-        android:id="@+id/textViewAmount"
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:layout_above="@+id/appCompatButtonChart"
-        android:layout_alignStart="@+id/spinner"
-        android:gravity="center_vertical"
-        android:text=""
-        android:textSize="20dp" />
+            android:id="@+id/textViewAmount"
+            android:layout_width="146dp"
+            android:layout_height="30dp"
+            android:layout_above="@+id/appCompatButtonChart"
+            android:layout_alignStart="@+id/spinner"
+            android:gravity="center_vertical"
+            android:textSize="20dp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonChart"

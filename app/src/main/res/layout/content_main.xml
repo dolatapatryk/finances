@@ -52,6 +52,8 @@
         android:id="@+id/textViewAmount"
         android:layout_width="192dp"
         android:layout_height="43dp"
+        android:gravity="center_vertical"
+        android:textSize="30dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="149dp"

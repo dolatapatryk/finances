@@ -115,7 +115,7 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     private void showStatement(int month, int year){
         List<Category> categories = CategoryController.getAllCategories(userLogin, db.getReadableDatabase());
         CategoryController.setMonthlyAmountToCategory(month, year, categories, db.getReadableDatabase());
-        String amount = String.valueOf(CategoryController.calculateTotal(categories)) + " zł";
+        String amount = String.format("%.2f zł", CategoryController.calculateTotal(categories));
         textViewAmount.setText(amount);
         adapterCategory = new ArrayAdapter<>(this, R.layout.row ,
                 categories);
