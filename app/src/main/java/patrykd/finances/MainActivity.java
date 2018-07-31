@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity
         for(Account acc:accounts){
             amount += acc.getAmount();
         }
-        textViewAmount.setText(String.valueOf(amount) + " zł");
+        textViewAmount.setText(String.format("%.2f zł", amount));
     }
 
     private void deleteAccount(int position){

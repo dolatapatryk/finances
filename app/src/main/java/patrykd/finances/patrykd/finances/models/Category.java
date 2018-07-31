@@ -16,6 +16,6 @@ class Category {
 
     @Override
     public String toString(){
-        return name.toUpperCase() + " - " + monthlyAmount + " zł";
+        return name.toUpperCase() + " - " + String.format("%.2f zł", monthlyAmount);
     }
 }
