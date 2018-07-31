@@ -120,5 +120,6 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
         adapterCategory = new ArrayAdapter<>(this, R.layout.row ,
                 categories);
         listViewCategory.setAdapter(adapterCategory);
+        listViewCategory.setEnabled(true);
     }
 }
