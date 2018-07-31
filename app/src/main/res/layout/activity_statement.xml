@@ -64,6 +64,15 @@
             android:textSize="20dp"
             android:gravity="center_vertical"/>
 
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButtonChart"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            android:background="@color/colorTextHint"
+            android:text="Chart" />
+
+
 
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>

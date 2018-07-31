@@ -7,12 +7,15 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.Chart;
 
 import java.util.List;
 
@@ -29,9 +32,11 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     private Spinner spinner;
     private ListView listViewCategory;
     private AppCompatButton appCompatButtonShow;
+    private AppCompatButton appCompatButtonChart;
     private TextView textViewAmount;
 
     private int month;
+    private int year;
     private String userLogin;
     private ArrayAdapter<String> adapterMonth;
     private ArrayAdapter<Category> adapterCategory;
@@ -57,12 +62,14 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
         textInputEditTextYear = findViewById(R.id.textInputEditTextYear);
         spinner = findViewById(R.id.spinner);
         appCompatButtonShow = findViewById(R.id.appCompatButtonShow);
+        appCompatButtonChart = findViewById(R.id.appCompatButtonChart);
         listViewCategory = findViewById(R.id.listViewCategory);
         textViewAmount = findViewById(R.id.textViewAmount);
     }
 
     private void initListeners(){
         appCompatButtonShow.setOnClickListener(this);
+        appCompatButtonChart.setOnClickListener(this);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -84,7 +91,16 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.appCompatButtonShow:
-                showStatement(month, Integer.parseInt(textInputEditTextYear.getText().toString().trim()));
+                year = Integer.parseInt(textInputEditTextYear.getText().toString().trim());
+                showStatement(month, year);
+                appCompatButtonChart.setVisibility(View.VISIBLE);
+                break;
+            case R.id.appCompatButtonChart:
+                Intent chartIntent = new Intent(activity, ChartActivity.class);
+                chartIntent.putExtra("login", userLogin);
+                chartIntent.putExtra("month", month);
+                chartIntent.putExtra("year", year);
+                startActivity(chartIntent);
                 break;
         }
     }
