@@ -1,13 +1,11 @@
 package patrykd.finances.patrykd.finances.activities;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,15 +13,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.Chart;
-
 import java.util.List;
 
 import patrykd.finances.R;
 import patrykd.finances.patrykd.finances.controllers.CategoryController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
 import patrykd.finances.patrykd.finances.models.Category;
-import patrykd.finances.patrykd.finances.models.MONTH;
+import patrykd.finances.patrykd.finances.models.Month;
 
 public class StatementActivity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = StatementActivity.this;
@@ -39,7 +35,7 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     private int month;
     private int year;
     private String userLogin;
-    private ArrayAdapter<MONTH> adapterMonth;
+    private ArrayAdapter<Month> adapterMonth;
     private ArrayAdapter<Category> adapterCategory;
     private DatabaseHelper db;
 
@@ -107,7 +103,7 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void displayMonths(){
-        adapterMonth = new ArrayAdapter<>(this, R.layout.simple_spinner_item, MONTH.values());
+        adapterMonth = new ArrayAdapter<>(this, R.layout.simple_spinner_item, Month.values());
         adapterMonth.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterMonth);
     }
