@@ -29,6 +29,7 @@ class Expense {
 
     public Expense(){}
 
+    @Override
     public String toString(){
         return String.format("%.2f zł - ", this.amount) + categoryName.toUpperCase() + " - "+
                 accountName.toUpperCase() + " - " + date;

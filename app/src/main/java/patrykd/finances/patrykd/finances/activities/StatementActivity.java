@@ -23,6 +23,7 @@ import patrykd.finances.R;
 import patrykd.finances.patrykd.finances.controllers.CategoryController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
 import patrykd.finances.patrykd.finances.models.Category;
+import patrykd.finances.patrykd.finances.models.MONTH;
 
 public class StatementActivity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = StatementActivity.this;
@@ -38,7 +39,7 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     private int month;
     private int year;
     private String userLogin;
-    private ArrayAdapter<String> adapterMonth;
+    private ArrayAdapter<MONTH> adapterMonth;
     private ArrayAdapter<Category> adapterCategory;
     private DatabaseHelper db;
 
@@ -106,8 +107,7 @@ public class StatementActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void displayMonths(){
-        String[] months = {"Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"};
-        adapterMonth = new ArrayAdapter<>(this, R.layout.simple_spinner_item, months);
+        adapterMonth = new ArrayAdapter<>(this, R.layout.simple_spinner_item, MONTH.values());
         adapterMonth.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterMonth);
     }
