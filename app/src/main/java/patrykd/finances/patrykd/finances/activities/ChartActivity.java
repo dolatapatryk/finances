@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -91,6 +92,7 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         pieChart.setRotationEnabled(true);
         pieChart.setCenterTextSize(16f);
         initLegend(pieChart.getLegend());
+        pieChart.setEntryLabelColor(Color.BLACK);
     }
 
     private void initChart(){
@@ -113,7 +115,6 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
         }
 
         PieDataSet dataSet = new PieDataSet(yValues, "");
-
         return dataSet;
     }
 
