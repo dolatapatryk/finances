@@ -26,6 +26,7 @@ import java.util.List;
 import patrykd.finances.patrykd.finances.activities.AddAccountActivity;
 import patrykd.finances.patrykd.finances.activities.AddExpenseActivity;
 import patrykd.finances.patrykd.finances.activities.ExpenseActivity;
+import patrykd.finances.patrykd.finances.activities.LoginActivity;
 import patrykd.finances.patrykd.finances.activities.StatementActivity;
 import patrykd.finances.patrykd.finances.controllers.AccountController;
 import patrykd.finances.patrykd.finances.database.DatabaseHelper;
@@ -133,7 +134,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(loginIntent);
             return true;
         }
 
@@ -157,10 +160,6 @@ public class MainActivity extends AppCompatActivity
             Intent catIntent = new Intent(getApplicationContext(), CategoryActivity.class);
             catIntent.putExtra("login", userLogin);
             startActivity(catIntent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         } else if(id == R.id.monthly_statement){
             Intent statementIntent = new Intent(getApplicationContext(), StatementActivity.class);
             statementIntent.putExtra("login", userLogin);
