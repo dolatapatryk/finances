@@ -110,8 +110,14 @@ public class ChartActivity extends AppCompatActivity implements View.OnClickList
     private PieDataSet initValues(List<Category> cats){
         CategoryController.setMonthlyAmountToCategory(month, year, cats, db.getReadableDatabase());
         ArrayList<PieEntry> yValues = new ArrayList<>();
-        for(int i=0;i<cats.size();i++){
-            yValues.add(new PieEntry((float)cats.get(i).getMonthlyAmount(), cats.get(i).getName().toUpperCase()));
+//        for(int i=0;i<cats.size();i++){
+//            yValues.add(new PieEntry((float)cats.get(i).getMonthlyAmount(), cats.get(i).getName().toUpperCase()));
+//        }
+
+        for(Category cat:cats){
+            if(cat.getMonthlyAmount() > 0){
+                yValues.add(new PieEntry((float)cat.getMonthlyAmount(), cat.getName().toUpperCase()));
+            }
         }
 
         PieDataSet dataSet = new PieDataSet(yValues, "");
